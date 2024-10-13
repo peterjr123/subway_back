@@ -1,5 +1,5 @@
-const readFileFromS3 = require('../s3')
-const geolib = require('geolib')
+import geolib from 'geolib';
+import readFileFromS3 from '../s3.js';
 
 const sampleStationInfo = [
     {
@@ -24,11 +24,10 @@ const sampleStationInfo = [
  * @param longitude(number): 경도
  * @return 지하철 역 정보 JSON Array - 위 sample 참조
  */
-export const getStationsWithinLocation = async (latitude, longitude) => {
-    const stations = await readFileFromS3('stationLocations.csv')
+const getStationsWithinLocation = async (latitude, longitude) => {
+    const stations = await readFileFromS3('stationLocations.csv');
     const stationsWithinLocation = stations
         .filter(station => {
-            // 두점사이의 거리
             const distance = geolib.getDistance(
                 { latitude, longitude },
                 { latitude: station.latitude, longitude: station.longitude }
@@ -37,7 +36,7 @@ export const getStationsWithinLocation = async (latitude, longitude) => {
         })
         .sort((station1, station2) => station1.name.localeCompare(station2.name));
 
-    console.log(`total ${stationsWithinLocation.length} stations within 1km`);
-
     return stationsWithinLocation;
-}
+};
+
+export default getStationsWithinLocation;

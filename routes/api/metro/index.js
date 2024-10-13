@@ -1,6 +1,5 @@
-const express = require('express');
-const stationRouter = require('./stationRouter')
-const congestionRouter = require('./congestionRouter')
+import express from 'express';
+import stationRouter from './stationRouter.js';
 
 const router = express.Router();
 

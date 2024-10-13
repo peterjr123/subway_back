@@ -1,4 +1,4 @@
-const readFileFromS3 = require('../s3')
+import readFileFromS3 from '../s3.js';
 
 const sampleCongestionInfo = [
     {
@@ -38,16 +38,15 @@ const sampleCongestionInfo = [
  * @param time(string): 시간 HH:mm
  * @return 지하철 혼잡도 정보 JSON - 위 sample 참조
  */
-export const getStationCongestionInfo = async (stationName, dateType, time) => {
+const getStationCongestionInfo = async (stationName, dateType, time) => {
     const congestions = await readFileFromS3('congestions.csv');
+
     const rawFilteredInfo = congestions
         .filter(
             congestion =>
                 congestion.name === stationName && congestion.dateType === dateType
         )
         .sort((cong1, cong2) => cong1.lineNumber - cong2.lineNumber);
-
-    // console.log(rawFilteredInfo);
 
     // 시간 필터 만들기
     const [hh, mm] = time.split(':');
@@ -56,10 +55,9 @@ export const getStationCongestionInfo = async (stationName, dateType, time) => {
     // 해당 시간대의 복잡도만 가져오기
     const selectedCongestionInfo = rawFilteredInfo.map(info => ({
         lineNumber: info.lineNumber,
-        stationName: info.stationName,
         name: info.name,
         direction: info.direction,
-        congestion: info[adjustedTime],
+        congestion: info[adjustedTime] ? info[adjustedTime] : '해당 시간에 열차가 운행하지 않아 혼잡도가 존재하지 않습니다',
     }));
 
     // 같은 호선끼리 묶기
@@ -79,3 +77,5 @@ export const getStationCongestionInfo = async (stationName, dateType, time) => {
         congestion: results,
     };
 };
+
+export default getStationCongestionInfo;

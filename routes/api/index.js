@@ -1,5 +1,5 @@
-const express = require('express');
-const metroRouter = require('./metro')
+import express from 'express';
+import metroRouter from './metro/index.js';
 
 const router = express.Router();
 
