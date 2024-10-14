@@ -1,3 +1,7 @@
+# 의존성 패키지 (ec2에서 직접 install)
+node_modules
+
+
 # Logs
 logs
 *.log
