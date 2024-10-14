@@ -1,0 +1,21 @@
+version: 0.2
+
+env:
+  parameter-store:
+    AWS_ACCESS_KEY_ID: "/CWS/AWS_ACCESS_KEY"
+    AWS_SECRET_ACCESS_KEY: "/CWS/AWS_SECRET_KEY"
+    API_KEY: "/CWS/OPEN_API_KEY"
+
+phases:
+  pre_build:
+    commands:
+      - echo "Generating .env file"
+      - "echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID > .env"
+      - "echo AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY >> .env"
+      - "echo API_KEY=$API_KEY >> .env"
+  build:
+    commands:
+      - echo "build phase"
+artifacts:
+  files:
+    - "**/*"
