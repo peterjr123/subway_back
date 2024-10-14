@@ -1,16 +1,21 @@
 {
   "name": "subway",
   "version": "0.0.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.670.0",
     "aws-sdk": "^2.1691.0",
     "axios": "^1.7.7",
     "cookie-parser": "~1.4.4",
+    "csv-parser": "^3.0.0",
     "debug": "~2.6.9",
+    "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "geolib": "^3.3.4",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "pug": "^3.0.3"
